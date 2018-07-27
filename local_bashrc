@@ -1,0 +1,91 @@
+# If not running interactively, don't do anything
+[[ "$-" != *i* ]] && return
+
+# Use case-insensitive filename globbing
+shopt -s nocaseglob
+
+shopt -s cdspell # auto correct minor typo
+
+# When changing directory small typos can be ignored by bash
+# for example, cd /vr/lgo/apaache would find /var/log/apache
+shopt -s cdspell
+
+
+# use python 3.6
+alias python='/usr/bin/python3.6'
+
+
+# Don't put duplicate lines in the history.
+export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+#
+# Some people use a different file for aliases
+if [ -f "${HOME}/.bash_aliases" ]; then
+  source "${HOME}/.bash_aliases"
+fi
+#
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+#
+# Interactive operation...
+alias rm='rm -i -r -f'
+alias cp='cp -i'
+alias mv='mv -i'
+alias q="exit"
+alias ..="cdls .."
+alias ...="..;.."
+alias ....="...;.."
+#
+# Default to human readable figures
+# alias df='df -h'
+# alias du='du -h'
+#
+alias grep='grep --color'                     # show differences in colour
+alias egrep='egrep --color=auto'              # show differences in colour
+alias fgrep='fgrep --color=auto'              # show differences in colour
+#
+# Some shortcuts for different directory listings
+alias ls='ls -hF --color=tty'                 # classify files in colour
+alias dir='ls --color=auto --format=vertical'
+# cd to a folder and list contents
+function cdls() {
+    builtin cd "$@" &&ls
+}
+function cdla() {
+    builtin cd "$@" &&la
+}
+
+# favoriate folder
+. ~/tools/fav.sh
+# more alias
+alias vdir='ls --color=auto --format=long'
+alias ll='ls -l'                              # long list
+alias la='ls -A'                              # all but . and ..
+# alias l='ls -CF'                              #
+alias goog="cygstart 'http://www.google.com' "
+alias markdown="cdls /cygdrive/U/Documents/R/rmarkdown/" 
+alias sasapp="ssh 10.212.226.46 " # ssh to server w/o password
+alias tmux='tmux -2'
+
+###########################################################
+# convenient folder
+
+##############################################################
+
+
+function render() {
+    Rscript rmd2html.R "$@"
+    cp -n "$@.html" /cygdrive/Q/Modeling/E962491/research/note
+}
+
+#############################################################
+
+alias open='cygstart'
+# alias lst='ls -R | grep ":$" | sed -e '"'"'s/:$//'"'"' -e '"'"'s/[^-][^\/]*\//--/g'"'"' -e '"'"'s/^/   /'"'"' -e '"'"'s/-/|/'"'"
+
+
+
+
+
